@@ -737,7 +737,6 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from)
 #endif
 
 		/* TBD verify that the link is multicast or broadcast */
-		/* XXX Find out the link it came in over? */
 		if (in_cksum((u_short *)ALLIGN(buf+hlen), cc)) {
 			if (verbose)
 				logtrace("ICMP %s from %s: Bad checksum\n",
@@ -825,7 +824,6 @@ pr_pack(char *buf, int cc, struct sockaddr_in *from)
 			break;
 
 		/* TBD verify that the link is multicast or broadcast */
-		/* XXX Find out the link it came in over? */
 
 		if (in_cksum((u_short *)ALLIGN(buf+hlen), cc)) {
 			if (verbose)

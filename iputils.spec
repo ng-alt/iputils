@@ -2,7 +2,7 @@
 # This spec file is for _testing_. You may use it (I do), but no warranty.
 #
 
-%define ssdate 020124
+%define ssdate 021109
 Summary: The ping program for checking to see if network hosts are alive.
 Name: iputils
 Version: 20%{ssdate}
@@ -48,9 +48,17 @@ install -c rdisc		${RPM_BUILD_ROOT}%{_sbindir}/
 install -c tracepath		${RPM_BUILD_ROOT}%{_sbindir}/
 install -c tracepath6		${RPM_BUILD_ROOT}%{_sbindir}/
 install -c traceroute6		${RPM_BUILD_ROOT}%{_sbindir}/
+install -c setkey/setkey	${RPM_BUILD_ROOT}%{_sbindir}/
+install -c racoon/racoon	${RPM_BUILD_ROOT}%{_sbindir}/
+install -c racoon/racoonctl	${RPM_BUILD_ROOT}%{_sbindir}/
 
 mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man8
+mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man3
+mkdir -p ${RPM_BUILD_ROOT}%{_mandir}/man5
 install -c doc/*.8		${RPM_BUILD_ROOT}%{_mandir}/man8/
+install -c libipsec/*.3		${RPM_BUILD_ROOT}%{_mandir}/man3/
+install -c racoon/*.8		${RPM_BUILD_ROOT}%{_mandir}/man8/
+install -c racoon/*.5		${RPM_BUILD_ROOT}%{_mandir}/man5/
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -72,7 +80,12 @@ rm -rf ${RPM_BUILD_ROOT}
 %{_sbindir}/tracepath6
 %attr(4755,root,root) %{_sbindir}/traceroute6
 %{_sbindir}/rdisc
+%{_sbindir}/setkey
+%{_sbindir}/racoon
+%{_sbindir}/racoonctl
 %{_mandir}/man8/*
+%{_mandir}/man5/*
+%{_mandir}/man3/*
 
 
 %changelog

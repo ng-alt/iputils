@@ -34,8 +34,6 @@ int confirm = 0;
  * confirm_flag fixes refusing service of kernels without MSG_CONFIRM.
  * i.e. for linux-2.2 */
 int confirm_flag = MSG_CONFIRM;
-/* And this is workaround for bug in IP_RECVERR on raw sockets which is present
- * in linux-2.2.[0-19], linux-2.4.[0-7] */
 int working_recverr;
 
 /* timing */
@@ -851,4 +849,3 @@ void status(void)
 	}
 	fprintf(stderr, "\n");
 }
-

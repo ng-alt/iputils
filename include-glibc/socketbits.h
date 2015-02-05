@@ -114,10 +114,6 @@ enum __socket_type
 #define	AF_PACKET	PF_PACKET
 #define	AF_MAX		PF_MAX
 
-/* Socket level values.  Others are defined in the appropriate headers.
-
-   XXX These definitions also should go into the appropriate headers as
-   far as they are available.  */
 #define SOL_IPV6        41
 #define SOL_ICMPV6	58
 #define SOL_RAW		255
@@ -144,6 +140,24 @@ struct sockaddr
     __SOCKADDR_COMMON (sa_);	/* Common data: address family and length.  */
     char sa_data[14];		/* Address data.  */
   };
+
+/* Structure large enough to hold any socket address (with the historical
+   exception of AF_UNIX).  We reserve 128 bytes.  */
+#if ULONG_MAX > 0xffffffff
+# define __ss_aligntype	__uint64_t
+#else
+# define __ss_aligntype	__uint32_t
+#endif
+#define _SS_SIZE	128
+#define _SS_PADSIZE	(_SS_SIZE - (2 * sizeof (__ss_aligntype)))
+
+struct sockaddr_storage
+{
+    unsigned short ss_family;
+    __ss_aligntype __ss_align;	/* Force desired alignment.  */
+    char __ss_padding[_SS_PADSIZE];
+};
+
 
 
 /* Bits in the FLAGS argument to `send', `recv', et al.  */

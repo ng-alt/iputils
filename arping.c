@@ -513,5 +513,3 @@ main(int argc, char **argv)
 		sigprocmask(SIG_SETMASK, &osset, NULL);
 	}
 }
-
-

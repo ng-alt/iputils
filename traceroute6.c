@@ -440,8 +440,8 @@ int main(int argc, char *argv[])
 		/* Message for rpm maintainers: have _shame_. If you want
 		 * to fix something send the patch to me for sanity checking.
 		 * "datalen" patch is a shit. */
-		if ((unsigned int)datalen == 0)
-			datalen == sizeof(struct pkt_format);
+		if ((unsigned int)datalen < sizeof(struct pkt_format))
+			datalen = sizeof(struct pkt_format);
 	}
 
 	if (datalen < (int)sizeof(struct pkt_format) || datalen >= MAXPACKET) {

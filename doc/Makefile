@@ -34,7 +34,7 @@ $(MANFILES): index.db
 	@-rm -rf tmp.db2man
 
 clean:
-	@rm -rf $(MANFILES) $(HTMLFILES) iputils.html tmp.db2html tmp.db2man
+	@rm -rf $(MANFILES) $(HTMLFILES) iputils.html tmp.db2html tmp.db2man index.out
 
 snapshot:
 	@date "+%y%m%d" > snapshot.db
@@ -43,5 +43,3 @@ snapshot:
 $(MANFILES): $(SGMLFILES)
 
 $(HTMLFILES): $(SGMLFILES)
-
-

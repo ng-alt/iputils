@@ -35,6 +35,9 @@
  <listitem><para>
   <ulink url="pg3.html">pg3, ipg, pgset</ulink>.
  </para></listitem>
+ <listitem><para>
+  <ulink url="setkey.html">setkey</ulink>.
+ </para></listitem>
 </itemizedlist>
 </sect1>
 

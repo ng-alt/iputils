@@ -1,3 +1,16 @@
+[021109]
+* added racoon. It is too hairy and will be split in the next snapshots.
+  However, at current stage iputils is the most convenient place to compile
+  it, because iputils privides necessary infrastructure to cure madness
+  of glibc and import uptodate API defintiions.
+
+[021108]
+* Noah L. Meyerhans <frodo@morgul.net> Wow. == instead = in traceroute6.
+* Port of libipsec and setkey from KAME. ME.
+* Add option -P ipsec_policy to ping. ME.
+* Disassemble KAME setkey(8) manpage and make necessary modifications
+  to reflect our differences.
+
 [020927]
 * arping.sgml, some options were forgotten.
 * send seqno in network byte order. Me.
@@ -14,8 +27,6 @@ be without a man page for ping?"
 * Error returned from recvmsg() resulted in a bogus printout in traceroute6. Me.
 * Use IPV6_CHECKSUM on icmp socket in traceroute6. Me.
 * Noah L. Meyerhans <frodo@morgul.net> Fix to doc.
-!* Noah L. Meyerhans <frodo@morgul.net> What is the problem with "long" triptime?
-!  Reporter does not respond. _Malignantly_.
 * Thomas 'Dent' Mirlacher <dent@cosy.sbg.ac.at> Ping did not exit sometimes!
 * Add option -W to override default 10 second linger timeout. Me.
 * Mads Martin Jørgensen <mmj@suse.de>: ping should not bind to autoselected

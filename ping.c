@@ -62,6 +62,9 @@ char copyright[] =
 
 #include <netinet/ip.h>
 #include <netinet/ip_icmp.h>
+#ifdef DO_IPSEC
+#include <libipsec.h>
+#endif
 
 
 #define	MAXIPLEN	60
@@ -114,6 +117,9 @@ main(int argc, char **argv)
 	u_char *packet;
 	char *target, hnamebuf[MAXHOSTNAMELEN];
 	char rspace[3 + 4 * NROUTES + 1];	/* record route space */
+#ifdef DO_IPSEC
+	char *policy_string = NULL;
+#endif
 
 	icmp_sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	socket_errno = errno;
@@ -124,7 +130,7 @@ main(int argc, char **argv)
 	source.sin_family = AF_INET;
 
 	preload = 1;
-	while ((ch = getopt(argc, argv, COMMON_OPTSTR "bRT:")) != EOF) {
+	while ((ch = getopt(argc, argv, COMMON_OPTSTR "bRT:P:")) != EOF) {
 		switch(ch) {
 		case 'b':
 		        broadcast_pings = 1;
@@ -199,6 +205,11 @@ main(int argc, char **argv)
 		COMMON_OPTIONS
 			common_options(ch);
 			break;
+		case 'P':
+#ifdef DO_IPSEC
+			policy_string = optarg;
+			break;
+#endif
 		default:
 			usage();
 		}
@@ -468,6 +479,21 @@ main(int argc, char **argv)
 			exit(2);
 		}
 	}
+
+#ifdef DO_IPSEC
+	if (policy_string) {
+		char *buf = ipsec_set_policy(policy_string, strlen(policy_string));
+		if (buf == NULL) {
+			perror ("ping: can't parse policy string");
+			exit(2);
+		}
+		if (setsockopt(icmp_sock, SOL_IP,  IP_IPSEC_POLICY,
+			       buf, ipsec_get_policylen(buf)) < 0) {
+			perror ("ping: can't setup policy");
+			exit(2);
+		}
+	}
+#endif
 
 	if (datalen > 0xFFFF - 8 - optlen - 20) {
 		if (uid || datalen > sizeof(outpack)-8) {
@@ -826,7 +852,6 @@ void pr_icmph(__u8 type, __u8 code, __u32 info, struct icmphdr *icp)
 	switch(type) {
 	case ICMP_ECHOREPLY:
 		printf("Echo Reply\n");
-		/* XXX ID + Seq + Data */
 		break;
 	case ICMP_DEST_UNREACH:
 		switch(code) {
@@ -888,7 +913,6 @@ void pr_icmph(__u8 type, __u8 code, __u32 info, struct icmphdr *icp)
 		break;
 	case ICMP_ECHO:
 		printf("Echo Request\n");
-		/* XXX ID + Seq + Data */
 		break;
 	case ICMP_TIME_EXCEEDED:
 		switch(code) {
@@ -912,19 +936,15 @@ void pr_icmph(__u8 type, __u8 code, __u32 info, struct icmphdr *icp)
 		break;
 	case ICMP_TIMESTAMP:
 		printf("Timestamp\n");
-		/* XXX ID + Seq + 3 timestamps */
 		break;
 	case ICMP_TIMESTAMPREPLY:
 		printf("Timestamp Reply\n");
-		/* XXX ID + Seq + 3 timestamps */
 		break;
 	case ICMP_INFO_REQUEST:
 		printf("Information Request\n");
-		/* XXX ID + Seq */
 		break;
 	case ICMP_INFO_REPLY:
 		printf("Information Reply\n");
-		/* XXX ID + Seq */
 		break;
 #ifdef ICMP_MASKREQ
 	case ICMP_MASKREQ:

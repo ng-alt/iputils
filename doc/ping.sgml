@@ -25,6 +25,7 @@
 <arg choice="opt">-F <replaceable/flowlabel/</arg>
 <arg choice="opt">-I <replaceable/interface/</arg>
 <arg choice="opt">-M <replaceable/hint/</arg>
+<arg choice="opt">-P <replaceable/policy/</arg>
 <arg choice="opt">-Q <replaceable/tos/</arg>
 <arg choice="opt">-S <replaceable/sndbuf/</arg>
 <arg choice="opt">-T <replaceable/timestamp option/</arg>
@@ -148,6 +149,15 @@ destination is a multicast address.
   <listitem><para>
 Numeric output only.
 No attempt will be made to lookup symbolic names for host addresses.
+  </para></listitem>
+ </varlistentry>
+ <varlistentry>
+  <term><option>-P <replaceable/policy/</option></term>
+  <listitem><para>
+Override system-wide IPsec policy. Argument is a string of format described
+in ipsec_set_policy(3). Couple of examples: "out bypass" requests to bypass
+system-wide defaults, "out ipsec esp/transport//require" demands to send
+ping packets using ESP in transport mode.
   </para></listitem>
  </varlistentry>
  <varlistentry>

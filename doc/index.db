@@ -9,6 +9,7 @@
 <!ENTITY rarpd SYSTEM "rarpd.sgml">
 <!ENTITY tftpd SYSTEM "tftpd.sgml">
 <!ENTITY pg3 SYSTEM "pg3.sgml">
+<!ENTITY setkey SYSTEM "setkey.sgml">
 ]>
 <reference id="index">
 <title>System Manager's Manual: iputils</title>
@@ -22,5 +23,6 @@
 &tftpd;
 &rdisc;
 &pg3;
+&setkey;
 
 </reference>

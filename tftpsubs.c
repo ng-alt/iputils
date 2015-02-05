@@ -33,7 +33,7 @@
 
 #ifndef lint
 /*static char sccsid[] = "from: @(#)tftpsubs.c	5.6 (Berkeley) 2/28/91";*/
-/* static char rcsid[] = "$Id: tftpsubs.c,v 1.2 1993/08/01 18:07:04 mycroft Exp $"; */
+/* static char rcsid[] = "$Id: tftpsubs.c 241182 2011-02-17 21:50:03Z $"; */
 #endif /* not lint */
 
 /* Simple minded read-ahead/write-behind subroutines for tftp user and
@@ -107,9 +107,6 @@ int readit(FILE * file, struct tftphdr **dpp, int convert)
 	b = &bfs[current];              /* look at new buffer */
 	if (b->counter == BF_FREE)      /* if it's empty */
 		read_ahead(file, convert);      /* fill it */
-#if 0
-	assert(b->counter != BF_FREE);  /* check */
-#endif
 	*dpp = (struct tftphdr *)b->buf;        /* set caller's ptr */
 	return b->counter;
 }
